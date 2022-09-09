@@ -7,13 +7,17 @@ const launch = {
 	mission: 'NERV Exploration X',
 	rocket: 'AAA Wunder',
 	launchDate: new Date('December 25th, 2030'),
-	destination: 'Kepler-442b',
+	target: 'Kepler-442b',
 	customers: ['NERV', 'NASA'],
 	upcoming: true,
 	success: true,
 };
 
 launches.set(launch.flightNumber, launch);
+
+function existsLaunchWithId(launchId) {
+	return launches.has(launchId);
+}
 
 function getAllLaunches() {
 	return Array.from(launches.values());
@@ -32,7 +36,16 @@ function addNewLaunch(launch) {
 	);
 }
 
+function abortLaunchById(launchId) {
+	const aborted = launches.get(launchId);
+	aborted.upcoming = false;
+	aborted.success = false;
+	return aborted;
+}
+
 module.exports = {
+	existsLaunchWithId,
 	getAllLaunches,
 	addNewLaunch,
+	abortLaunchById,
 };
